@@ -70,7 +70,7 @@ for event in longpoll.listen():
             else:
                 if request == "начать" or request == 'товары':
                     file = open('orders/'+str(event.user_id)+'.txt', 'w+')
-                    r = requests.get(urls.urls['url'])
+                    r = requests.get(urls.urls['url'], timeout=20)
                     response = json.loads(r.text).get('response')
                     items = response.get('items')
                     message = 'Привет! Вот все доступные товары: \n\n'
@@ -82,6 +82,7 @@ for event in longpoll.listen():
                         message += str(i + 1) + ') ' + name + ' ' + str(price) + '₽' + '\n'
                     message += '\nОтправь мне цифру товара, который тебя заинтересовал'
                     write_msg(event.user_id, message)
+                    r.close()
                     file.close()
 
                 elif request in times.keys() and file_check(event.user_id, 2):
@@ -94,9 +95,8 @@ for event in longpoll.listen():
                     keyboard_for_response = VkKeyboard(inline=True)
                     keyboard_for_response.add_button('accept ' + str(event.user_id), VkKeyboardColor.POSITIVE)
                     keyboard_for_response.add_button('decline ' + str(event.user_id), VkKeyboardColor.NEGATIVE)
-                    write_msg('439356800', file.read(), keyboard_for_response)
+                    write_msg('*********', file.read(), keyboard_for_response)
                     file.close()
-                    #528119958 439356800
 
                 elif request in places and file_check(event.user_id, 1):
                     msg = ''
