@@ -61,7 +61,7 @@ def listening():
             if event.to_me:
 
                 request = event.text.lower()
-                if event.user_id == 439356800:
+                if event.user_id == ********:
                     if request[0:6] == 'accept':
                         msg = ''
                         for line in open('orders/' + request[7:] + '.txt', 'r'):
@@ -96,9 +96,8 @@ def listening():
                         keyboard_for_response = VkKeyboard(inline=True)
                         keyboard_for_response.add_button('accept ' + str(event.user_id), VkKeyboardColor.POSITIVE)
                         keyboard_for_response.add_button('decline ' + str(event.user_id), VkKeyboardColor.NEGATIVE)
-                        write_msg('439356800', file.read(), keyboard_for_response)
+                        write_msg('*********', file.read(), keyboard_for_response)
                         file.close()
-                        # 528119958 439356800
 
                     elif request in places and file_check(event.user_id, 1):
                         msg = ''
